@@ -4,7 +4,10 @@
   "description": "",
   "main": "main.js",
   "dependencies": {
-    "electron": "^1.6.10"
+    "@types/jquery": "^2.0.46",
+    "electron": "^1.6.10",
+    "jquery": "^3.2.1",
+    "systemjs": "^0.20.12"
   },
   "devDependencies": {
     "electron": "1.6.10"
