@@ -8,12 +8,9 @@ const ipc = electron.ipcRenderer
 
 $("#btnGo").bind('click', () => {
     console.log("AAAAAAAAAAAAAAAA");
-    ipc.send('GO');
+    ipc.send('GO', $("#input").val());
 });
 
-ipc.send('clickbutton');
-
 ipc.on('OK', ()=>{
-    $("#input").val("AAAAAAAAAAAAAAAA");
     ipc.send("duocroi");
 })

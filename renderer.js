@@ -8,10 +8,8 @@ var electron = require('electron');
 var ipc = electron.ipcRenderer;
 $("#btnGo").bind('click', function () {
     console.log("AAAAAAAAAAAAAAAA");
-    ipc.send('GO');
+    ipc.send('GO', $("#input").val());
 });
-ipc.send('clickbutton');
 ipc.on('OK', function () {
-    $("#input").val("AAAAAAAAAAAAAAAA");
     ipc.send("duocroi");
 });
