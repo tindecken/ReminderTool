@@ -6,10 +6,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var $ = require("jquery");
 var electron = require('electron');
 var ipc = electron.ipcRenderer;
+var remote = electron.remote;
+var count;
 $("#btnGo").bind('click', function () {
+    count = Number($("#input").val());
     console.log("AAAAAAAAAAAAAAAA");
-    ipc.send('GO', $("#input").val());
+    ipc.send('GO', count);
 });
-ipc.on('OK', function () {
-    ipc.send("duocroi");
+ipc.on('countdown', function (evt, count) {
+    $("#input").val(count);
+});
+ipc.on('continue', function () {
+    ipc.send('GO', count);
 });

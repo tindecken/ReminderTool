@@ -5,12 +5,19 @@ import * as $ from "jquery";
 
 const electron = require('electron');
 const ipc = electron.ipcRenderer
+const remote = electron.remote
+let count: number
 
 $("#btnGo").bind('click', () => {
+    count = Number($("#input").val())
     console.log("AAAAAAAAAAAAAAAA");
-    ipc.send('GO', $("#input").val());
+    ipc.send('GO', count);
 });
 
-ipc.on('OK', ()=>{
-    ipc.send("duocroi");
+ipc.on('countdown', (evt, count)=>{
+    $("#input").val(count)
+})
+
+ipc.on('continue', () => {
+    ipc.send('GO', count);
 })

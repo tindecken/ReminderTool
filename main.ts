@@ -3,51 +3,65 @@ const electron = require('electron');
 import * as $ from "jquery";
 import {countdown} from './utilities';
 
-const ipc = electron.ipcMain;
-let mainWindow;
-let tray = null;
-
+const ipc = electron.ipcMain
+let mainWindow
+let tray = null
 app.on('ready', () => {
     mainWindow = new BrowserWindow({
-        // darkTheme: false,
-        width: 1200,
-        height: 400,
-        // backgroundColor: '#2e2c29'
+        width: 310,
+        height: 90,
+        resizable: false,
+        minimizable: false,
+        maximizable: false
     });
     mainWindow.setMenu(null);
     mainWindow.loadURL(`file://${__dirname}/index.html`);
-    mainWindow.webContents.openDevTools(); //mainWindow.openDevTools()
+    // mainWindow.webContents.openDevTools(); //mainWindow.openDevTools()
     mainWindow.on('close', ()=>{
         mainWindow = null;
     })
 
     //Tray icon
     tray = new Tray(`${__dirname}/icon.ico`);
-    tray.setToolTip("App is running");
 
-    // //Add listener to button GO
-    //
-    //
-    // if($.isReady){
-    //     $("#btnGo").bind('click', () => console.log('Button clicked'));
-    // }
 
-    let contents = mainWindow.webContents;
-    console.log(contents)
+
+    // let contents = mainWindow.webContents;
+    // console.log(contents)
 
 })
 
-ipcMain.on('GO', (event, count) => {
-    console.log(count);
-    countdown(count);
-    console.log(count);
-    mainWindow.webContents.send('OK');
-});
+ipc.on("GO", (event, count) => {
+    mainWindow.hide()
+    tray.destroy()
+    tray = new Tray(`${__dirname}/icon.ico`)
+    tray.on('right-click', () => {
+        app.quit()
+    });
+    let timer = setInterval(_ => {
+        console.log("Count:" + count)
+        mainWindow.webContents.send('countdown', count)
+        count--
+        if (count === -1){
+            tray.destroy()
+            tray = new Tray(`${__dirname}/icon_alert.ico`)
+            tray.displayBalloon({
+                title: "",
+                content: "Time Up"
+            })
+            tray.on('double-click', () => {
+                mainWindow.webContents.send('continue')
+                // console.log('Tray clicked');
+            });
 
-// ipcMain.on("duocroi", ()=>{
-//     tray.setToolTip("DDDDDDDDDDDDDdd")
-// })
-//
-// ipcMain.on('countdown', (event, count)=>{
-//     tray.setToolTip();
-// })
+            tray.on('right-click', () => {
+                app.quit()
+            });
+
+            clearInterval(timer)
+            // mainWindow.webContents.send('finish')
+        }
+    }, 1000)
+})
+
+
