@@ -1,11 +1,19 @@
-# Reminder Tool
+# Reminder Tool #
 
-This tool is 
+Tool for notice user after expected time
 
-## Usage
+### Install & Run
 
-Usage
- 
-## Source coe
+```
+npm install
+npm start
+```
 
-Source code
+### Build ###
+
+* Delete folders ReminderTool-*
+* ```
+npm run build
+```
+
+### License MIT ###
