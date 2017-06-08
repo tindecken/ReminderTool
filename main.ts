@@ -37,7 +37,14 @@ ipc.on("GO", (event, count) => {
     tray = new Tray(`${__dirname}/icon.ico`)
     tray.on('right-click', () => {
         app.quit()
-    });
+    })
+
+    tray.on('double-click', () => {
+        clearInterval(timer)
+        mainWindow.webContents.send('continue')
+        // console.log('Tray clicked');
+    })
+
     let timer = setInterval(_ => {
         console.log("Count:" + count)
         mainWindow.webContents.send('countdown', count)
@@ -51,17 +58,17 @@ ipc.on("GO", (event, count) => {
             })
             tray.on('double-click', () => {
                 mainWindow.webContents.send('continue')
-                // console.log('Tray clicked');
             });
 
             tray.on('right-click', () => {
                 app.quit()
             });
-
             clearInterval(timer)
             // mainWindow.webContents.send('finish')
         }
     }, 1000)
 })
+
+
 
 

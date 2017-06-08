@@ -10,9 +10,12 @@
     "systemjs": "^0.20.12"
   },
   "devDependencies": {
-    "electron": "1.6.10"
+    "electron": "1.6.10",
+    "electron-packager": "^8.7.1",
+    "rimraf": "^2.6.1"
   },
   "scripts": {
+    "build": "rimraf RemiderTool-* && electron-packager . --platform=darwin,win32,linux --arch=x64 --icon=icon",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron ."
   },

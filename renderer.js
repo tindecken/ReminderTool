@@ -8,6 +8,7 @@ var electron = require('electron');
 var ipc = electron.ipcRenderer;
 var remote = electron.remote;
 var count;
+var isRunning = false;
 $("#btnGo").bind('click', function () {
     count = Number($("#input").val());
     console.log("AAAAAAAAAAAAAAAA");
