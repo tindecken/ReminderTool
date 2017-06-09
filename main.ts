@@ -38,9 +38,12 @@ ipc.on("GO", (event, count) => {
     tray.on('right-click', () => {
         app.quit()
     })
-
     tray.on('double-click', () => {
         clearInterval(timer)
+        tray.displayBalloon({
+            title: "",
+            content: "Restarted count: " + count + " seconds"
+        })
         mainWindow.webContents.send('continue')
         // console.log('Tray clicked');
     })
@@ -57,6 +60,10 @@ ipc.on("GO", (event, count) => {
                 content: "Time Up"
             })
             tray.on('double-click', () => {
+                tray.displayBalloon({
+                    title: "",
+                    content: "Restarted count: " + count + " seconds"
+                })
                 mainWindow.webContents.send('continue')
             });
 
