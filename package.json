@@ -1,11 +1,14 @@
 {
-  "name": "ReminderTool",
+  "name": "remindertool",
   "version": "0.0.1",
-  "description": "",
+  "description": "Reminder Tool after several seconds",
+  "version": "0.0.1",
+  "author": "Tindecken <tindecken@gmail.com>",
   "main": "main.js",
   "dependencies": {
     "@types/jquery": "^2.0.46",
     "electron": "^1.6.10",
+    "electron-builder": "^18.6.2",
     "jquery": "^3.2.1",
     "systemjs": "^0.20.12"
   },
@@ -14,11 +17,24 @@
     "electron-packager": "^8.7.1",
     "rimraf": "^2.6.1"
   },
+  "build": {
+    "appId": "com.electron.tindecken",
+    "copyright": "Copyright © year 2017 - Tindecken",
+    "compression": "normal",
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    }
+  },
   "scripts": {
     "build": "rimraf RemiderTool-* && electron-packager . --platform=darwin,win32,linux --arch=x64 --icon=icon",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "build --dir",
+    "dist": "build"
   },
+  
+  "postinstall": "install-app-deps",
   "repository": {
     "type": "git",
     "url": "git+https://tindecken@bitbucket.org/tindecken/remindertool.git"

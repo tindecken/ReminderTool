@@ -2,21 +2,37 @@ import {app, BrowserWindow, Tray, ipcMain} from 'electron';
 const electron = require('electron');
 import * as $ from "jquery";
 import {countdown} from './utilities';
+import * as fs from "fs";
+var log = require('electron-log')
+// Write to this file, must be set before first logging
+log.transports.file.stream = fs.createWriteStream('log.txt');
+log.transports.file.file = __dirname + '/log.txt';
 
+// fs.createWriteStream options, must be set before first logging
+log.transports.file.streamConfig = { flags: 'w' };
+
+// set existed file stream
+
+
+log.info("AAAAAAAAA")
 const ipc = electron.ipcMain
 let mainWindow
 let tray = null
 app.on('ready', () => {
+
+    log.info("BBBBBBBBBBBB")
     mainWindow = new BrowserWindow({
-        width: 310,
-        height: 90,
+        // width: 310,
+        // height: 90,
+        width: 700,
+        height: 400,
         resizable: false,
         minimizable: false,
         maximizable: false
     });
     mainWindow.setMenu(null);
     mainWindow.loadURL(`file://${__dirname}/index.html`);
-    // mainWindow.webContents.openDevTools(); //mainWindow.openDevTools()
+    mainWindow.webContents.openDevTools(); //mainWindow.openDevTools()
     mainWindow.on('close', ()=>{
         mainWindow = null;
     })
